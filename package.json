@@ -1,0 +1,16 @@
+{
+    "name": "onboarding-self-service",
+    "version": "0.0.1",
+    "description": "Onboarding Self Service application POC",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/fabrice974/onboarding-self-service.git"
+    },
+    "dependencies": {
+      "path": "latest"
+    }
+  }
