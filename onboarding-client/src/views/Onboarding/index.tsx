@@ -1,6 +1,8 @@
 import React from "react";
-import OnboardingForm from "../../components/OnboardingForm";
 import Select from 'react-select'
+import OnboardingForm from "../OnboardingForm";
+import OnboardingProcess from "../OnboardingProcess";
+import { Bundles } from "../../types/bundles"
 
 export default class Onboarding extends React.Component <any, any> {
     constructor(props: any) {
@@ -11,12 +13,29 @@ export default class Onboarding extends React.Component <any, any> {
         }
     }
 
-    bundles = [ {value: "productlessV1", label: "product less"},
-        {value: "prepaidV1", label: "prepaid"},
-        {value: "depositV1", label: "deposit"},
-        {value: "kycV1", label: "kyc"},
-        {value: "creditCardV1", label: "credit card"},
-    ]
+    bundleLabels = new Map<string, string>([
+        [Bundles.productlessV1, "product less"],
+        [Bundles.prepaidV1, "prepaid"],
+        [Bundles.depositV1, "deposit"],
+        [Bundles.kycV1, "kyc"],
+        [Bundles.creditCardV1, "credit card"],
+        [Bundles.ulocMvp1, "uloc"],
+    ]);
+
+    bundleOptions() {
+         var options: {value: string, label: string} []
+         options = []
+         
+         Bundles.Bundles.forEach(bundleKey => {
+            let label = this.bundleLabels.get(bundleKey)
+            if (label !== undefined) {
+                var option = {value: bundleKey, label: label}
+                options.push(option)
+            }
+         })
+
+        return options
+    }
 
     handleBundleChange = (bundleSelectedOption: any) => {
         console.log(`Option selected:`, bundleSelectedOption);
@@ -25,16 +44,19 @@ export default class Onboarding extends React.Component <any, any> {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <h1>Onboarding self service</h1>
 
                 <div className="onboarding-infos-container">
-                    Product bundle:
-                    <Select className="select" onChange={this.handleBundleChange} options={this.bundles} />
+                Product bundle:
+                    <Select className="select" onChange={this.handleBundleChange} options={this.bundleOptions()} />
 
                     <OnboardingForm bundle={this.state.bundleSelected} />
 
                     <button>Create product</button>
+                </div>
+                <div className="onboarding-process-container">
+                    <OnboardingProcess />
                 </div>
             </div>
         );
