@@ -37,11 +37,22 @@
   }
 }
 
+.container {
+  display: table;
+  width: 100%;
+}
+
 .onboarding-infos-container {
   width: 50%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  height: 100px;
+  position: absolute;
+  left: 0px;
+}
+
+.onboarding-process-container {
+  width: 50%;
+  position: absolute;
+  right: 0px;
 }
 
 .select {
