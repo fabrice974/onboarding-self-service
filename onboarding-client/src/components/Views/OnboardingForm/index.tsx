@@ -1,12 +1,12 @@
 import React from "react";
-import DepositV1Form from "../../components/DepositV1Form";
-import ProductlessV1Form from "../../components/ProductlessV1Form";
-import UlocMvp1Form from "../../components/UlocMvp1Form";
-import KycForm from "../../components/KycForm";
-import CreditCardV1Form from "../../components/CreditCardV1Form"
-import PrepaidV1Form from "../../components/PrepaidV1Form"
-import { Bundles } from "../../types/bundles";
-import UserForm from "../../components/UserForm";
+import { Bundles } from "../../../models/Onboarding/domain/Bundles";
+import DepositV1Form from "../DepositV1Form";
+import ProductlessV1Form from "../ProductlessV1Form";
+import UlocMvp1Form from "../UlocMvp1Form";
+import KycForm from "../KycForm";
+import CreditCardV1Form from "../CreditCardV1Form"
+import PrepaidV1Form from "../PrepaidV1Form"
+import UserForm from "../UserForm";
 
 const yes = "yes"
 const no = "no"
