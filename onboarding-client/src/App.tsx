@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Onboarding from './views/Onboarding';
+import { OnboardingProvider } from './components/OnboardingProvider';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <div className="main">
-        <Onboarding />
+        <OnboardingProvider />
       </div>
     </div>
   );
