@@ -1,6 +1,5 @@
 import React from 'react'
 import OnboardingView from './OnboardingView'
-import { Bundles } from '../models/Onboarding/domain/Bundles'
 
 export class OnboardingController extends React.Component <any, any> {
     constructor(props: any) {
@@ -8,32 +7,6 @@ export class OnboardingController extends React.Component <any, any> {
         this.state = {
             bundleSelected: null
         }
-    }
-
-    bundleLabels = new Map<string, string>([
-        [Bundles.productlessV1, "product less"],
-        [Bundles.prepaidV1, "prepaid"],
-        [Bundles.depositV1, "deposit"],
-        [Bundles.kycV1, "kyc"],
-        [Bundles.creditCardV1, "credit card"],
-        [Bundles.ulocMvp1, "uloc"],
-    ]);
-
-    allBundles = () => {
-        let options: {value: string, label: string} []
-        options = []
-
-        let bundles: string[]
-        bundles = this.props.viewmodel.GetAllBundles()
-        bundles.forEach(bundleKey => {
-           let label = this.bundleLabels.get(bundleKey)
-           if (label !== undefined) {
-               var option = {value: bundleKey, label: label}
-               options.push(option)
-           }
-        })
-
-       return options
     }
 
     createProduct = () => {
@@ -51,7 +24,7 @@ export class OnboardingController extends React.Component <any, any> {
     render() {
         return (
             <OnboardingView
-                allBundles={this.allBundles}
+                allBundles={this.props.viewModel.getAllBundles()}
                 onBundleSelected={this.setBundle}
                 bundleSelected={this.state.bundleSelected}
                 createProduct={this.createProduct} />
