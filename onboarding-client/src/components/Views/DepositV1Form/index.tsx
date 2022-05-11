@@ -5,16 +5,14 @@ import ConsentsForm from "../ConsentsForm";
 import EmploymentInfoForm from "../EmploymentInfoForm";
 import CustomerAddressForm from "../CustomerAddressForm";
 
-export default class DepositV1Form extends React.Component {
-    render() {
-        return (
-            <div>
-                <CustomerInfoForm />
-                <EmploymentInfoForm />
-                <CustomerAddressForm />
-                <AccountDetailsForm />
-                <ConsentsForm />
-            </div>
-        );
-      }
+export default function DepositV1Form(props: any) {
+    return (
+        <div>
+            <CustomerInfoForm register={props.register} />
+            <EmploymentInfoForm control={props.control} register={props.register} />
+            <CustomerAddressForm control={props.control} register={props.register} />
+            <AccountDetailsForm control={props.control} register={props.register} />
+            <ConsentsForm control={props.control} register={props.register} />
+        </div>
+    );
 }

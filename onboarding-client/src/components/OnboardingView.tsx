@@ -1,61 +1,66 @@
 import React from "react";
 import Select from 'react-select'
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import OnboardingForm from "./Views/OnboardingForm";
-import OnboardingProcess from "./Views/OnboardingProcess";
-import { Bundles } from '../models/Onboarding/domain/Bundles'
+import OnboardingProcessView from './Views/OnboardingProcessView';
+import { BundlesEnum } from '../models/Onboarding/domain/Bundles'
+import { IOnboardingInput } from '../models/Onboarding/domain/OnboardingInput'
+import { useState } from 'react';
 
-export default class OnboardingView extends React.Component <any, any> {
+export default function OnboardingView(props: any) {
+        const { control, register, handleSubmit, watch } = useForm<IOnboardingInput>();
+        const onSubmit: SubmitHandler<IOnboardingInput> = data => {
+            return props.createProduct(data);
+        }
+        const [bundleSelected, setBundleSelected] = useState("")
 
-    bundleLabels = new Map<string, string>([
-        [Bundles.productlessV1, "product less"],
-        [Bundles.prepaidV1, "prepaid"],
-        [Bundles.depositV1, "deposit"],
-        [Bundles.kycV1, "kyc"],
-        [Bundles.creditCardV1, "credit card"],
-        [Bundles.ulocMvp1, "uloc"],
-    ]);
-
-    allBundles = () => {
-        let options: {value: string, label: string} []
-        options = []
-
-        let bundles: string[]
-        console.log(this.props.allBundles)
-        bundles = this.props.allBundles
-        bundles.forEach(bundleKey => {
-           let label = this.bundleLabels.get(bundleKey)
-           if (label !== undefined) {
-               var option = {value: bundleKey, label: label}
-               options.push(option)
-           }
-        })
-
-       return options
-    }
-
-    render() {
-        const {
-            onBundleSelected,
-            bundleSelected,
-            createProduct
-        } = this.props
+        React.useEffect(() => {
+            const subscription = watch((value, { name, type }) => {
+                    var bundleId: string
+                    if (value.bundleId !== undefined && value.bundleId.value) {
+                        bundleId = value.bundleId.value
+                        setBundleSelected(bundleId)
+                    }
+                }
+            );
+            return () => subscription.unsubscribe();
+          }, [watch]);
 
         return (
             <div className="container">
                 <h1>Onboarding self service</h1>
 
                 <div className="onboarding-infos-container">
-                Product bundle:
-                    <Select className="select" onChange={onBundleSelected} options={this.allBundles()} />
+                    Product bundle:
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <Controller
+                        name="bundleId"
+                        control={control}
+                        render={({ field }) => 
+                            <Select className="select"
+                            {...register('bundleId', {
+                                required: true
+                            })}
+                            {...field}
+                            options={[
+                                { value: BundlesEnum.creditCardV1, label: "credit card V1" },
+                                { value: BundlesEnum.depositV1, label: "deposit V1" },
+                                { value: BundlesEnum.kycV1, label: "KYC V1" },
+                                { value: BundlesEnum.prepaidV1, label: "prepaid V1" },
+                                { value: BundlesEnum.productlessV1, label: "productless V1" },
+                                { value: BundlesEnum.ulocMvp1, label: "uloc mvp 1" },
+                              ]}
+                        />}
+                    />
 
-                    <OnboardingForm bundle={bundleSelected} />
+                        <OnboardingForm bundleSelected={bundleSelected} control={control} register={register} />
 
-                    <button onClick={createProduct}>Create product</button>
+                        <input type="submit" placeholder="create product" />
+                    </form>
                 </div>
                 <div className="onboarding-process-container">
-                    <OnboardingProcess />
+                    <OnboardingProcessView onboardingFlow={props.onboardingFlow} />
                 </div>
             </div>
         );
-      }
-}
+    }

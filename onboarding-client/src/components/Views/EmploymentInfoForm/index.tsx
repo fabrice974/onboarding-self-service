@@ -1,31 +1,41 @@
-import React from "react";
 import Select from 'react-select'
 import AddressForm from "../AddressForm";
+import { EmploymentsEnum } from '../../../models/Onboarding/domain/Employments'
+import { Controller } from "react-hook-form";
 
-export default class EmploymentInfoForm extends React.Component {
-    constructor(props: any) {
-        super(props)
-        this.state = {
-            employmentStatus: null
-        }
-    }
-
-    employmentStatuses = [ {value: "EMPLOYMENT_STATUS_EMPLOYED", label: "employed"},
-        {value: "EMPLOYMENT_STATUS_UNEMPLOYED", label: "unemployed"},
-        {value: "EMPLOYMENT_STATUS_RETIRED", label: "retired"},
-    ]
-
-    render() {
+export default function EmploymentInfoForm (props: any) {
+    let employmentData = [
+            { value: EmploymentsEnum.employed, label: "employed" },
+            { value: EmploymentsEnum.unemployed, label: "unemployed" },
+            { value: EmploymentsEnum.retired, label: "retired" },
+        ]
         return (
             <div>
                 <div> Employment Info: </div>
                 <div>
-                    <Select className="select" options={this.employmentStatuses} />
-                    <input type="email" name="status" defaultValue="EMPLOYMENT_STATUS_UNEMPLOYED" placeholder="employment status" />
-                    <AddressForm />
-                    <input type="text" name="industry" defaultValue="111110" placeholder="industry" />
+                    <Controller
+                        name="employmentsInfo.status"
+                        control={props.control}
+                        render={({ field }) => 
+                            <Select className="select"
+                            {...props.register('employmentsInfo.status', {
+                                required: true
+                            })}
+                            {...field}
+                            options={employmentData}
+                        />}
+                    />
+
+                    <AddressForm registerName="employmentsInfo" register={props.register} />
+
+                    <input type="text"
+                        {...props.register('employmentsInfo.industry', {
+                            required: true
+                        })}
+                        name="industry"
+                        defaultValue="111110"
+                        placeholder="industry" />
                 </div>
             </div>
-        );
-      }
+        )
 }

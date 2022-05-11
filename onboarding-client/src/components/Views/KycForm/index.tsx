@@ -1,20 +1,16 @@
 import React from "react";
 import CustomerInfoForm from "../CustomerInfoForm";
-import AccountDetailsForm from "../AccountDetailsForm";
 import ConsentsForm from "../ConsentsForm";
 import EmploymentInfoForm from "../EmploymentInfoForm";
 import CustomerAddressForm from "../CustomerAddressForm";
 
-export default class KycForm extends React.Component {
-    render() {
+export default function KycForm(props: any) {
         return (
             <div>
-                <CustomerInfoForm />
-                <EmploymentInfoForm />
-                <CustomerAddressForm />
-                <AccountDetailsForm />
-                <ConsentsForm />
+                <CustomerInfoForm register={props.register} />
+                <EmploymentInfoForm control={props.control} register={props.register} />
+                <CustomerAddressForm control={props.control} register={props.register} />
+                <ConsentsForm control={props.control} register={props.register} />
             </div>
         );
-      }
 }

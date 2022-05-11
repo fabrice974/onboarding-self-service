@@ -1,12 +1,9 @@
-import React from "react";
 import CustomerInfoForm from "../CustomerInfoForm";
 
-export default class productlessV1Form extends React.Component {
-    render() {
+export default function productlessV1Form(props: any) {
         return (
             <div>
-                <CustomerInfoForm />
+                <CustomerInfoForm register={props.register} />
             </div>
         );
-      }
 }

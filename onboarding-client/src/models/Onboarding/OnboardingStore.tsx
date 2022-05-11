@@ -1,8 +1,21 @@
-import { Bundles } from "./domain/Bundles"
+import OnboardingFlow from "./domain/OnboardingFlow"
+import OnboardingStep from "./domain/OnboardingStep"
 
 export class OnboardingStore{
+    onboardingFlow :OnboardingFlow
 
-    GetAllBundles() :string[] {
-        return [ Bundles.productlessV1, Bundles.ulocMvp1, Bundles.depositV1, Bundles.kycV1, Bundles.creditCardV1 ]
+    constructor() {
+        this.onboardingFlow = new OnboardingFlow()
+    }
+
+    GetOnboardingFlow() :OnboardingFlow {
+        return this.onboardingFlow
+    }
+
+    AddStep(stepName: string) : OnboardingStep {
+        let onboardingStep = new OnboardingStep(stepName)
+        this.onboardingFlow.addStep(onboardingStep)
+        
+        return onboardingStep
     }
 }

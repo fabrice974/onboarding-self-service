@@ -1,27 +1,48 @@
-import React from "react";
 import Select from 'react-select'
+import { AccountPurposesEnum, SourceOfFundsEnum } from '../../../models/Onboarding/domain/AccountDetails'
+import { Controller } from "react-hook-form";
 
-export default class AccountDetailsForm extends React.Component {
-    
-    accountPurposes = [ 
-        {value: "ACCOUNT_PURPOSE_EVERYDAY_TRANSACTIONS", label: "Every day transactions"},
-    ]
-
-    primarySourceOfFunds = [ {
-        value: "PRIMARY_SOURCE_OF_FUNDS_EMPLOYMENT_INCOME_SUCH_AS_SALARY_OR_SELF_EMPLOYMENT_INCOME", label: "Salary or Self employment income"},
-    ]
-
-    render() {
+export default function AccountDetailsForm(props: any) {
         return (
             <div>
                 <div> Account Details Info: </div>
                 <div>
-                    <Select className="select" options={this.accountPurposes} />
-                    <Select className="select" options={this.primarySourceOfFunds} />
-                    <input type="text" name="primarySourceOfFunds" defaultValue="COMPANY" placeholder="first name" />
-                    <input type="checkbox" name="authorizedThirdPartyUsage" placeholder="authorized third party usage" />
+
+                <Controller
+                        name="accountDetails.accountPurpose"
+                        control={props.control}
+                        render={({ field }) => 
+                            <Select className="select"
+                            {...props.register('accountDetails.accountPurpose', {
+                                required: true
+                            })}
+                            {...field}
+                            options={[
+                                { value: AccountPurposesEnum.everyDayTransactions, label: "Every day transactions" },
+                                ]}
+                        />}
+                    />
+
+                    <Controller
+                        name="accountDetails.sourceOfFund"
+                        control={props.control}
+                        render={({ field }) => 
+                            <Select className="select"
+                            {...props.register('accountDetails.sourceOfFund', {
+                                required: true
+                            })}
+                            {...field}
+                            options={[
+                                { value: SourceOfFundsEnum.salaryOrSelfEmployment, label: "Salary or Self employment income" },
+                                ]}
+                        />}
+                    />
+                    
+                    Authorized third party usage:
+                    <input type="checkbox"
+                        {...props.register('accountDetails.authorizedThirdPartyUsage')}
+                        defaultChecked="true" />
                 </div>
             </div>
         );
-      }
 }
