@@ -1,21 +1,34 @@
-import React from "react";
 import Select from 'react-select'
+import { ConsentTypesEnum } from '../../../models/Onboarding/domain/Consents'
+import { Controller } from "react-hook-form";
 
-export default class ConsentsForm extends React.Component {
-    
-    consentTypes = [ 
-        {value: "CONSENT_TYPE_PRIVACY_TERMS", label: "Privacy Terms"},
-    ]
-
-    render() {
+export default function ConsentsForm(props: any) {
         return (
             <div>
                 <div> Consents Info: </div>
                 <div>
-                    <Select className="select" options={this.consentTypes} />
-                    <input type="text" name="documentNameAndVersion" defaultValue="https://finaptic.com/" placeholder="document name and version" />
+                <Controller
+                        name="consents.type"
+                        control={props.control}
+                        render={({ field }) => 
+                            <Select className="select"
+                            {...props.register('consents.type', {
+                                required: true
+                            })}
+                            {...field}
+                            options={[
+                                { value: ConsentTypesEnum.privacyTerms, label: "Privacy Terms" },
+                                ]}
+                        />}
+                    />
+                    <input type="text"
+                        {...props.register('consents.documentNameAndVersion', {
+                            required: true
+                        })}
+                        name="documentNameAndVersion"
+                        defaultValue="https://finaptic.com/"
+                        placeholder="document name and version" />
                 </div>
             </div>
         );
-      }
 }
