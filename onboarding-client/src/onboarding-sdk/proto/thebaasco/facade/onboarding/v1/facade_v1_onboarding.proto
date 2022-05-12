@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package thebaasco.facade.onboarding.v1;
+option go_package = "proto/facade/onboarding/v1";
+import "google/protobuf/empty.proto";
+import "thebaasco/tenant/onboarding/v1/onboarding_v1.proto";
+
+service OnboardingService {
+
+  rpc InitiateApplication(thebaasco.tenant.onboarding.v1.InitiateApplicationRequest) returns (google.protobuf.Empty);
+
+  rpc UpdatePersonalDetails(thebaasco.tenant.onboarding.v1.UpdatePersonalDetailsRequest) returns (google.protobuf.Empty);
+
+  rpc UpdateContactDetails(thebaasco.tenant.onboarding.v1.UpdateContactDetailsRequest) returns (google.protobuf.Empty);
+
+  rpc UpdateAccountDetails(thebaasco.tenant.onboarding.v1.UpdateAccountDetailsRequest) returns (google.protobuf.Empty);
+
+  rpc UpdateEmployment(thebaasco.tenant.onboarding.v1.UpdateEmploymentRequest) returns (google.protobuf.Empty);
+
+  rpc UpdateCustomerResidency(thebaasco.tenant.onboarding.v1.UpdateCustomerResidencyRequest) returns (google.protobuf.Empty);
+
+  rpc UpdateConsents(thebaasco.tenant.onboarding.v1.UpdateConsentsRequest) returns (google.protobuf.Empty);
+
+  rpc UpdateDisclosures(thebaasco.tenant.onboarding.v1.UpdateDisclosuresRequest) returns (google.protobuf.Empty);
+
+  rpc UpdateAddresses(thebaasco.tenant.onboarding.v1.UpdateAddressesRequest) returns (google.protobuf.Empty);
+
+  rpc UpdateCommunicationPreferences(thebaasco.tenant.onboarding.v1.UpdateCommunicationPreferencesRequest) returns (google.protobuf.Empty);
+
+  rpc ValidateDocuments(thebaasco.tenant.onboarding.v1.ValidateDocumentsRequest) returns (google.protobuf.Empty);
+
+  rpc ValidateSelfie(thebaasco.tenant.onboarding.v1.ValidateSelfieRequest) returns (google.protobuf.Empty);
+
+  rpc ValidateApplication(thebaasco.tenant.onboarding.v1.ValidateApplicationRequest) returns (google.protobuf.Empty);
+
+  rpc AcceptApplication(thebaasco.tenant.onboarding.v1.AcceptApplicationRequest) returns (google.protobuf.Empty);
+
+  rpc FinalizeApplicationCreateCustomer(thebaasco.tenant.onboarding.v1.FinalizeApplicationCreateCustomerRequest) returns (google.protobuf.Empty);
+
+  rpc FinalizeApplicationCreateProduct(thebaasco.tenant.onboarding.v1.FinalizeApplicationCreateProductRequest) returns (google.protobuf.Empty);
+
+  rpc CancelApplication(thebaasco.tenant.onboarding.v1.CancelApplicationRequest) returns (google.protobuf.Empty);
+
+}
