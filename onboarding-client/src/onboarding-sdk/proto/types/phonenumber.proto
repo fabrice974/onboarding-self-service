@@ -1,5 +1,5 @@
 syntax = "proto3";
-package thebaasco.types.v1;
+package thebaasco.types;
 
 option go_package = "proto/types;types";
 

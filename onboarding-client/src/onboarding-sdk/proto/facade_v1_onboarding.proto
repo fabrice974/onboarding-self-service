@@ -3,7 +3,7 @@ syntax = "proto3";
 package thebaasco.facade.onboarding.v1;
 option go_package = "proto/facade/onboarding/v1";
 import "google/protobuf/empty.proto";
-import "thebaasco/tenant/onboarding/v1/onboarding_v1.proto";
+import "onboarding_v1.proto";
 
 service OnboardingService {
 

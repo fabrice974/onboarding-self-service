@@ -5,10 +5,10 @@ option go_package = "proto/tenant/onboarding/v1";
 option java_package = "thebaasco.impl.grpc.tenant.onboarding.v1";
 option swift_prefix="Onb";
 import "google/protobuf/timestamp.proto";
-import "google/type/v1/date.proto";
-import "thebaasco/types/v1/options.proto";
-import "thebaasco/types/v1/protectedvalue.proto";
-import "thebaasco/types/v1/phonenumber.proto";
+import "google/type/date.proto";
+import "types/options.proto";
+import "types/protectedvalue.proto";
+import "types/phonenumber.proto";
 
 //Address is a message for providing a given Address for a customer.
 message Address {
@@ -103,9 +103,9 @@ message Employment {
   //e.g. 'OCCUPATION_8255_CONTRACTOR_AND_SUPERVISOR_LANDSCAPING'
   string occupation = 4; //[(validate.rules).string = {ignore_empty: true, max_len: 1024}];
   //The month and year the customer started this position.
-  google.type.v1.Date start_date = 5;
+  google.type.Date startDate = 5;
   //The month and year the customer no longer held this position.
-  google.type.v1.Date end_date = 6;
+  google.type.Date endDate = 6;
   //The Address of the employer.
   //The 'type' field must be set to 'WORK'. Required.
   Address work_address = 7;
@@ -113,7 +113,7 @@ message Employment {
   //PhoneNumber. In responses and events, if only WorkPhoneNumber was specified, PhoneNumber will assume SMS compatible to be false.
   string work_phone_number = 8; //[deprecated = true, (validate.rules).string = { ignore_empty: true, pattern: '\\+(9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\\d{1,14}$' }];
   //The phone number of the employer. See PhoneNumber for more details.
-  thebaasco.types.v1.PhoneNumber phone_number = 9;
+  thebaasco.types.PhoneNumber phone_number = 9;
 }
 
 //CustomerResidency contains the residency status details of the customer.
@@ -182,7 +182,7 @@ message PersonalDetails {
   //of 50 characters. Accepted characters: -, ', French accents, 0-9.
   string last_name = 3; //[(validate.rules).string = {min_len: 1, max_len: 50}];
   //The customer's date of birth.
-  google.type.v1.Date date_of_birth = 4;
+  google.type.Date date_of_birth = 4;
   //The customer alias. This value is optional and has a maximum
   //of 20 characters. Accepts alphanumeric input without special characters.
   string alias = 5; //[(validate.rules).string = {ignore_empty: true, max_len: 20, pattern: "^[A-Za-z0-9]*$"}];
@@ -221,7 +221,7 @@ message ContactDetails {
   reserved 4;
 
   //The contact phone number. See PhoneNumber type for more details.
-  thebaasco.types.v1.PhoneNumber contact_phone_number = 5;
+  thebaasco.types.PhoneNumber contact_phone_number = 5;
 }
 
 //CommunicationDetails is a message for providing communication preference details for a customer.
@@ -354,10 +354,10 @@ message OnboardingOperationResponseDetails {
 
   //The list of Consents required as part of this onboarding application.
   //Requirement will be enforced as part of a future release.
-  repeated TermsAndConditions consents = 9; //[(validate.rules).repeated = {max_items: 20}];
+  repeated TermsAndConditions Consents = 9; //[(validate.rules).repeated = {max_items: 20}];
   //The list of Disclosures required as part of this onboarding application
   //Requirement will be enforced as part of a future release.
-  repeated TermsAndConditions disclosures = 10; //[(validate.rules).repeated = {max_items: 20}];
+  repeated TermsAndConditions Disclosures = 10; //[(validate.rules).repeated = {max_items: 20}];
 }
 
 // TermsAndConditions is either a consent or a disclosure.
@@ -393,8 +393,8 @@ message OnboardingVerification {
 message InitiateApplicationRequest {
   reserved 1; //previously used for the customer_id
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.initiate-application-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.initiate-application-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.initiate-application-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.initiate-application-response";
 
   //The unique identifier of the bundle being applied for.
   string bundle_id = 2; //[(validate.rules).string = {ignore_empty: true, min_len: 1, max_len: 100}];
@@ -419,8 +419,8 @@ message InitiateApplicationResponse {
 //type of UpdatePersonalDetailsResponse on the response topic.
 message UpdatePersonalDetailsRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.update-personal-details-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.update-personal-details-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.update-personal-details-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.update-personal-details-response";
 
   //The UUID of the onboarding application to update.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -442,8 +442,8 @@ message UpdatePersonalDetailsResponse {
 //type of UpdateContactDetailsResponse on the response topic.
 message UpdateContactDetailsRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.update-contact-details-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.update-contact-details-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.update-contact-details-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.update-contact-details-response";
 
   //The UUID of the onboarding application to update.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -465,8 +465,8 @@ message UpdateContactDetailsResponse {
 //type of UpdateAccountDetailsResponse on the response topic.
 message UpdateAccountDetailsRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.update-account-details-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.update-account-details-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.update-account-details-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.update-account-details-response";
 
   //The UUID of the onboarding application to update.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -488,8 +488,8 @@ message UpdateAccountDetailsResponse {
 //asynchronous response type of UpdateEmploymentResponse on the response topic.
 message UpdateEmploymentRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.update-employment-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.update-employment-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.update-employment-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.update-employment-response";
 
   //The UUID of the onboarding application to update.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -511,8 +511,8 @@ message UpdateEmploymentResponse {
 //type of UpdateCustomerResidencyResponse on the response topic.
 message UpdateCustomerResidencyRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.update-customer-residency-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.update-customer-residency-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.update-customer-residency-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.update-customer-residency-response";
 
   //The UUID of the onboarding application to update.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -534,8 +534,8 @@ message UpdateCustomerResidencyResponse {
 //response type of UpdateConsentsResponse on the response topic.
 message UpdateConsentsRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.update-consents-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.update-consents-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.update-consents-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.update-consents-response";
 
   //The UUID of the onboarding application to update.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -557,8 +557,8 @@ message UpdateConsentsResponse {
 //response type of UpdateDisclosuresResponse on the response topic.
 message UpdateDisclosuresRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.update-disclosures-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.update-disclosures-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.update-disclosures-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.update-disclosures-response";
 
   //The UUID of the onboarding application to update.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -580,8 +580,8 @@ message UpdateDisclosuresResponse {
 //response type of UpdateAddressesResponse on the response topic.
 message UpdateAddressesRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.update-addresses-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.update-addresses-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.update-addresses-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.update-addresses-response";
 
   //The UUID of the onboarding application to update.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -603,8 +603,8 @@ message UpdateAddressesResponse {
 //response type of UpdateCommunicationPreferencesResponse on the response topic.
 message UpdateCommunicationPreferencesRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.update-communication-preferences-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.update-communication-preferences-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.update-communication-preferences-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.update-communication-preferences-response";
 
   //The UUID of the onboarding application to update.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -630,8 +630,8 @@ message UpdateCommunicationPreferencesResponse {
 //response topic.
 message ValidateDocumentsRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.validate-documents-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.validate-documents-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.validate-documents-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.validate-documents-response";
 
   //The UUID of the onboarding application to validate.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -646,8 +646,8 @@ message ValidateDocumentsRequest {
 //response topic.
 message ValidateSelfieRequest{
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.validate-selfie-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.validate-selfie-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.validate-selfie-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.validate-selfie-response";
 
   //The UUID of the onboarding application to validate.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -661,8 +661,8 @@ message ValidateSelfieRequest{
 //asynchronous response type of ValidateApplicationResponse on the response topic.
 message ValidateApplicationRequest{
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.validate-application-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.validate-application-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.validate-application-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.validate-application-response";
 
   //The UUID of the onboarding application to validate.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -704,8 +704,8 @@ message ValidateApplicationResponse {
 //response type of AcceptApplicationResponse on the response topic.
 message AcceptApplicationRequest{
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.accept-application-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.accept-application-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.accept-application-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.accept-application-response";
 
   //The UUID of the onboarding application to accept.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -725,8 +725,8 @@ message AcceptApplicationResponse {
 //FinalizeApplicationCreateCustomerResponse on the response topic.
 message FinalizeApplicationCreateCustomerRequest{
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.create-customer-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.create-customer-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.create-customer-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.create-customer-response";
 
   //The UUID of the onboarding application to create a customer for.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -749,8 +749,8 @@ message FinalizeApplicationCreateCustomerResponse {
 //FinalizeApplicationCreateProductResponse on the response topic.
 message FinalizeApplicationCreateProductRequest{
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.create-product-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.create-product-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.create-product-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.create-product-response";
 
   //The UUID of the onboarding application to create the product for.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -774,8 +774,8 @@ message FinalizeApplicationCreateProductResponse {
 //CancelApplicationResponse on the response topic.
 message CancelApplicationRequest {
 
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.cancel-application-command";
-  option (thebaasco.types.v1.response_topic) = "thebaasco.onboarding.cancel-application-response";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.cancel-application-command";
+  option (thebaasco.types.response_topic) = "thebaasco.onboarding.cancel-application-response";
 
   //The UUID of the onboarding application to create a customer for.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
@@ -808,7 +808,7 @@ message GetApplicationStatusResponse {
 //OnboardingApplicationCustomerOnboardedEvent is an event raised when a
 //customer is created.
 message OnboardingApplicationCustomerOnboardedEvent {
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.application-customer-onboarded";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.application-customer-onboarded";
 
   //The unique ID of this event. Can be used by consumers to determine if
   //an event has already been processed or not. This ID will always be a valid UUID.
@@ -834,7 +834,7 @@ message OnboardedProduct {
 //OnboardingApplicationProductOnboardedEvent is the async event message sent
 //when a product is created with the FinalizeApplicationCreateProductRequest.
 message OnboardingApplicationProductOnboardedEvent {
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.application-product-onboarded";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.application-product-onboarded";
 
   //The unique ID of this event. Can be used by consumers to determine if
   //an event has already been processed or not. This ID will always be a valid UUID.
@@ -853,10 +853,10 @@ message OnboardingApplicationProductOnboardedEvent {
 //IdentificationDocument contains information about the ID document provided during application process.
 message IdentificationDocument {
   //The number of the document used to identify the applicant, tokenized before being produced.
-  thebaasco.types.v1.ProtectedString id_number = 1; //[(thebaasco.types.pseudonimizationStrategy) = "tokenize", (thebaasco.types.pseudonimizationClassification) = "document", (validate.rules).message.required = true];
+  thebaasco.types.ProtectedString id_number = 1; //[(thebaasco.types.pseudonimizationStrategy) = "tokenize", (thebaasco.types.pseudonimizationClassification) = "document", (validate.rules).message.required = true];
   //The expiry date of the document used to identify the applicant, tokenized before being produced.
   //If expiration date could not be retrieved from the provided ID document, this field will be absent.
-  thebaasco.types.v1.ProtectedDate expiry_date = 2; //[(thebaasco.types.pseudonimizationStrategy) = "tokenize", (thebaasco.types.pseudonimizationClassification) = "document"];
+  thebaasco.types.ProtectedDate expiry_date = 2; //[(thebaasco.types.pseudonimizationStrategy) = "tokenize", (thebaasco.types.pseudonimizationClassification) = "document"];
   //The type of document used for identification.
   //The value stored here is one of the code values retrieved from the
   //ReferenceDataService with data_type set to 'DOCUMENT_TYPE'.
@@ -878,7 +878,7 @@ message IdentificationDocument {
 //a new customer is onboarded. As part of PB-3330, this event will also occur
 //when onboarding a new product for an existing customer.
 message OnboardingApplicationDataConfirmedEvent {
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.application-data-confirmed";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.application-data-confirmed";
 
   //The unique ID of this event. Can be used by consumers to determine if
   //an event has already been processed or not. This ID will always be a valid UUID.
@@ -898,7 +898,7 @@ message OnboardingApplicationDataConfirmedEvent {
 //OnboardingApplicationCanceledEvent is the async event message sent when
 //a customer canceled the onboarding application before completion of the application.
 message OnboardingApplicationCanceledEvent {
-  option (thebaasco.types.v1.topic) = "thebaasco.onboarding.application-canceled-event";
+  option (thebaasco.types.topic) = "thebaasco.onboarding.application-canceled-event";
 
   //The unique ID of this event. Can be used by consumers to determine if
   //an event has already been processed or not. This ID will always be a valid UUID.
@@ -912,9 +912,9 @@ message OnboardingApplicationCanceledEvent {
   string application_id = 4; //[(validate.rules).string.uuid = true];
 }
 
-//OnboardingService provides a way to upload documents and check the status of an
+//Onboarding provides a way to upload documents and check the status of an
 //onboarding application.
-service OnboardingService {
+service Onboarding {
   //GetApplicationStatus gets the current status of a given onboarding application.
   //It provides a way to handle non-authenticated users' interrupted sessions.
   //See GetApplicationStatusRequest for details.
@@ -928,18 +928,18 @@ service OnboardingService {
   //   along with its corresponding meta-data
   //The filename will be used to match the document's meta-data with the uploaded
   //content in step 2
-  rpc CreateFileUploadURL(CreateFileUploadURLRequest) returns (CreateFileUploadURLResponse) {
+  rpc CreateFileUploadURL(CreateFileUploadUrlRequest) returns (CreateFileUploadUrlResponse) {
   }
 }
 
-//CreateFileUploadURLRequest is the parameter to pass when calling CreateFileUploadURL.
-message CreateFileUploadURLRequest {
+//CreateFileUploadUrlRequest is the parameter to pass when calling CreateFileUploadURL.
+message CreateFileUploadUrlRequest {
   //The UUID representing the onboarding application that requested a file upload URL.
   string onboarding_application_id = 1; //[(validate.rules).string.uuid = true];
 }
 
-//CreateFileUploadURLResponse is the response returned by the CreateFileUploadURL
-message CreateFileUploadURLResponse {
+//CreateFileUploadUrlResponse is the response returned by the CreateFileUploadURL
+message CreateFileUploadUrlResponse {
 
   //The generated name for the file to upload.
   string filename = 1; //[(validate.rules).string.min_len = 1];
