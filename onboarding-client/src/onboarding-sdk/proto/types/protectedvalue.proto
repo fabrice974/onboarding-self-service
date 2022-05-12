@@ -1,0 +1,43 @@
+syntax = "proto3";
+package thebaasco.types;
+import "google/type/date.proto";
+
+option go_package = "proto/types;types";
+
+/*
+This message is designed to be used together with the tokenizer/processor that processes messages that are ready to be published.
+Sample usage:
+message FakePersonalInfo {
+    string name = 1;
+    ProtectedDate dob = 2 [(thebaasco.types.pseudonimizationStrategy) = "encrypt", (thebaasco.types.pseudonimizationClassification) = "dob"];
+    ProtectedString sin = 3 [(thebaasco.types.pseudonimizationStrategy) = "tokenize", (thebaasco.types.pseudonimizationClassification) = "sin"];
+}
+*/
+message ProtectedString {
+    // This union is a container for clear / protected values, ensuring at most one is set at a time
+    oneof value {
+        // The source value to be protected
+        string clear = 1; // [(validate.rules).string = {min_len : 1, max_len: 1024}];
+        // The target field that will contain a freeform protected string
+        string protected = 2; // [(validate.rules).string = {min_len : 1, max_len: 2048}];
+    }
+}
+
+/*
+This message is designed to be used together with the tokenizer/processor that processes messages that are ready to be published.
+Sample usage:
+message FakePersonalInfo {
+    string name = 1;
+    ProtectedDate dob = 2 [(thebaasco.types.pseudonimizationStrategy) = "encrypt"];
+    ProtectedString sin = 3 [(thebaasco.types.pseudonimizationStrategy) = "tokenize"];
+}
+*/
+message ProtectedDate {
+    // This union is a container for clear / protected values, ensuring at most one is set at a time
+    oneof value {
+        // The source date to be protected
+        google.type.Date clear = 1;
+        // The target field that will contain a freeform protected string
+        string protected = 2; // [(validate.rules).string = {min_len : 1, max_len: 2048}];
+    }
+}
